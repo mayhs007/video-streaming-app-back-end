@@ -1,42 +1,19 @@
-/**
- * TODO
- *
- * Create User  Route,Model,Controller
- *   - Create
- *   - Read
- *   - Update
- *   - Delete
- *   - Login (Admin & User)
- *
- * Create Movie Route,Model,Controller
- *   - Create
- *   - Read
- *   - Update
- *   - Delete
- * **/
 const express = require("express")
-const cors = require("cors")
 const mongoose = require("mongoose")
-const dotenv = require("dotenv")
-const movieRoutes = require("./routes/movie-routes")
-dotenv.config()
+const cors = require("cors")
+const { connectDB } = require("./db-connection")
+require("dotenv").config()
 
 const app = express()
-app.use(express.json())
+connectDB()
 app.use(cors())
-app.use("/movie", movieRoutes)
+app.use(express.json())
 
-mongoose.connect(process.env.MONGO_DB_URL)
-mongoose.connection.on("connected", () => {
-  console.log("Connected to mongodb...")
-})
+const VideoRoutes = require("./routes/video-routes")
+app.use("/video", VideoRoutes)
 
-mongoose.connection.on("error", err => {
-  console.log("Error connecting to mongo", err)
-})
-app.listen(process.env.PORT, err => {
-  if (err) {
-    console.error(err)
-  }
-  console.log("SERVER STARTED SUCCESSFULLY")
+const PORT = process.env.PORT || 8080
+
+app.listen(PORT, () => {
+  console.log("Application live on localhost:" + process.env.PORT)
 })

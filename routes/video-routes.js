@@ -1,10 +1,10 @@
 const express = require("express")
-const MovieController = require("../controller/movie-controller")
 const router = express.Router()
 const multer = require("multer")
-
 const fs = require("fs")
-// const path = require("path")
+
+const VideoController = require("../controller/video-controller")
+const gridStorage = require("../helper/storage")
 
 const storage = multer.diskStorage({
   destination: (request, file, cb) => {
@@ -27,8 +27,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-router.post("/create", upload.single("file"), MovieController.createMovie)
+// router.post("/create", upload.single("file"), MovieController.createMovie)
 
-router.get("/all", MovieController.getMovie)
+// router.get("/all", VideoController.getVideo)
+
+router.post("/upload", gridStorage().single("file"), VideoController.uploadVideo)
+
+router.get("/:fileName", VideoController.readVideo)
 
 module.exports = router

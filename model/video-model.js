@@ -1,6 +1,6 @@
 var mongoose = require("mongoose")
 
-var MovieSchema = mongoose.Schema({
+var VideoSchema = mongoose.Schema({
   title: { type: String },
   genre: { type: Array },
   path: { type: String },
@@ -8,4 +8,4 @@ var MovieSchema = mongoose.Schema({
   updatedAt: { type: Date },
   deletedAt: { type: Date },
 })
-module.exports = mongoose.model("Movie", MovieSchema)
+module.exports = mongoose.model("Video", VideoSchema)
