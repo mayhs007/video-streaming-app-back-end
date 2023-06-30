@@ -1,3 +1,4 @@
+const Grid = require("gridfs-stream")
 const mongoose = require("mongoose")
 const connectDB = async () => {
   try {
@@ -8,7 +9,11 @@ const connectDB = async () => {
   }
 }
 const getBucket = () => {
+  //ODM-> Object Data Modeling
   let db = mongoose.connections[0].db
   return new mongoose.mongo.GridFSBucket(db, { bucketName: "videos" })
 }
-module.exports = { connectDB, getBucket }
+const getGrid = () => {
+  return Grid(mongoose.connection.db, mongoose.mongo)
+}
+module.exports = { connectDB, getBucket, getGrid }

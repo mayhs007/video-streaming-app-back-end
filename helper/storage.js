@@ -13,4 +13,25 @@ const gridStorage = () => {
   })
   return multer({ storage: storageFs })
 }
-module.exports = gridStorage
+const gridFileStorage = () => {
+  let storage = multer.diskStorage({
+    destination: (request, file, cb) => {
+      if (!fs.existsSync("../front-end/public")) {
+        fs.mkdirSync("../front-end/public")
+      }
+      if (!fs.existsSync("../front-end/public/movies")) {
+        fs.mkdirSync("../front-end/public/movies")
+      }
+      if (!fs.existsSync("../front-end/public/movies/" + file.originalname)) {
+        cb(null, "../front-end/public/movies")
+      } else {
+        cb("File already Found", null)
+      }
+    },
+    filename: (request, file, cb) => {
+      cb(null, file.originalname)
+    },
+  })
+  return multer({ storage: storage })
+}
+module.exports = { gridStorage, gridFileStorage }

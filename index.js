@@ -10,7 +10,10 @@ app.use(cors())
 app.use(express.json())
 
 const VideoRoutes = require("./routes/video-routes")
+const AirbnbRoutes = require("./routes/airbnb-routes")
+
 app.use("/video", VideoRoutes)
+app.use("/airbnb", AirbnbRoutes)
 
 const PORT = process.env.PORT || 8080
 
