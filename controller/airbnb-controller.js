@@ -14,7 +14,7 @@ const readAirbnbs = (request, response) => {
   let page = parseInt(request.query.page) || 1
   let limit = parseInt(request.query.limit) || 50
   limit = limit > 50 ? 50 : limit
-  let descending = request.query.descending.toLowerCase() === "true" ? -1 : 1
+  let descending = request.query.descending?.toLowerCase() === "true" ? -1 : 1
   let field = request.query.field
 
   let data
