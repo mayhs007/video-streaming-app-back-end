@@ -14,6 +14,9 @@ const readAirbnbs = (request, response) => {
   let page = parseInt(request.query.page) || 1
   let limit = parseInt(request.query.limit) || 50
   limit = limit > 50 ? 50 : limit
+  let descending = request.query.descending.toLowerCase() === "true" ? -1 : 1
+  let field = request.query.field
+
   let data
   try {
     //select name,bedrooms,accommodates,beds from airbnbs;
@@ -65,18 +68,20 @@ const readAirbnbs = (request, response) => {
       select: fields,
       page,
       limit,
+      sort: { [field]: descending }, // -1 descending
+      // sort: { accommodates: 1 }, //   1 aescending
     }
 
     let query = {
       // accommodates: 2,  // -> Equal
-      accommodates: {
-        //   // $gt: 10,   // -> Greater
-        //   // $lt: 5,    // -> Less
-        //   // $eq: 2,    // -> Equal
-        //   // $ne: 6,    // -> Not Equal
-        //   // $gte: 8,   // -> GreaterThanEqual
-        //   // $lte: 2,   // -> LessThanEqual
-      },
+      // accommodates: {
+      //   //   // $gt: 10,   // -> Greater
+      //   //   // $lt: 5,    // -> Less
+      //   //   // $eq: 2,    // -> Equal
+      //   //   // $ne: 6,    // -> Not Equal
+      //   //   // $gte: 8,   // -> GreaterThanEqual
+      //   //   // $lte: 2,   // -> LessThanEqual
+      // },
     }
 
     //{ page:page,limit:limit}
@@ -95,7 +100,7 @@ const readAirbnbs = (request, response) => {
           data: { airbnbs: result.docs },
         }
       } else {
-        data = { error: result }
+        data = { error: "No data found" }
         statusCode = 500
       }
       response.writeHead(statusCode, headers)
