@@ -45,6 +45,7 @@ const readAirbnbs = (request, response) => {
     //   .lte(6)
     //   .limit(limit)
     //   .skip((page - 1) * limit)
+    //   .sort({[field]:descending})
     //   .then(airbnbs => {
     //     Airbnb.count({})
     //       .where("accommodates")
